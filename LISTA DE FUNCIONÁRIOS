@@ -1,0 +1,115 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Funcionario {
+int matricula, idade, numero;
+char nome, sexo;
+
+}funcionario;
+
+
+funcionario funcionarios[5];
+
+void exibeLista(void);
+void insereDados(void);
+void quickSort(funcionario funcionario[5], int inicio, int fim);
+
+int a;
+
+int main() {
+	FILE*file;
+file=fopen("exercicio.txt", "w");
+fprintf(file,"Obrigado Professora Larissa, amamamos a senhora.");
+fclose(file);
+int opcao;
+do {
+printf("Favor informar os dados que voce deseja: \n\n");
+printf(" 1- Inserir dados; \n 2- Exibir dados; \n 3- Quick Sort; \n 4- Finalizar o programa; \n ");
+scanf("%d",&opcao);
+switch (opcao) {
+case 1:
+insereDados();
+break;
+case 2:
+exibeLista();
+break;
+case 3:
+printf("\n Ordenacao por idade - QUICK SORT: \n");
+quickSort(funcionarios, 0, 4);
+for(a=0;a<=4;a++) {
+printf("\n");
+printf("Matricula: %d \n", funcionarios[a].matricula);
+printf("Nome: %c \n", funcionarios[a].nome);
+printf("Numero: %d \n", funcionarios[a].numero);
+printf("Sexo: %c \n", funcionarios[a].sexo);
+printf("Idade: %d \n", funcionarios[a].idade);
+printf("\n");
+         }
+break;
+case 4:
+printf("Programa finalizado! \n");
+default:
+break;
+  }
+ } while (opcao != 4);
+  return 0;
+}
+
+void insereDados() {
+for(a=0; a<=4; a++) {
+printf("Matricula: \n");
+scanf("%d", &funcionarios[a].matricula);
+printf("Nome: \n");
+scanf("%s", &funcionarios[a].nome);
+printf("Numero: \n");
+scanf("%d", &funcionarios[a].numero);
+printf("Sexo: masculino (M) e feminino (F): \n");
+scanf("%s", &funcionarios[a].sexo);
+printf("Idade: \n");
+scanf("%d", &funcionarios[a].idade);
+  }
+}
+
+void exibeLista() {
+for (a=0; a<=4; a++) {
+printf("\n");
+printf("Matricula: %d \n", funcionarios[a].matricula);
+printf("Nome: %c \n", funcionarios[a].nome);
+printf("Numero: %d \n", funcionarios[a].numero);
+printf("Sexo: %c \n", funcionarios[a].sexo);
+printf("Idade: %d \n", funcionarios[a].idade);
+printf("\n");
+  }
+}
+
+void quickSort(funcionario funcionarios[5], int inicio, int fim) {
+int pivo, aux, a, p, meio;
+a=inicio;
+p=fim;
+
+meio=(a+p)/2;
+pivo=funcionarios[meio].idade;
+
+do {
+while(funcionarios[a].idade<pivo){
+      a++;
+    }
+while(funcionarios[p].idade>pivo){
+      p--;
+    }
+if(a<=p) {
+aux=funcionarios[a].idade;
+funcionarios[a].idade=funcionarios[p].idade;
+funcionarios[p].idade=aux;
+a++;
+p--;
+    }
+  } while(p>a);
+
+if(inicio<p) {
+quickSort(funcionarios,inicio,p);
+}
+if(a<fim) {
+quickSort(funcionarios,a,fim);
+}
+}
